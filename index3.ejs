@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image1x-icon" href="/image/favicon.png.ico">
+  <link rel="stylesheet" href="styles/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <title> Indian Geo-Platform of ISRO </title>
+  <style>
+    .dynamic-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    .dynamic-table th, .dynamic-table td {
+      border: 1px solid #dddddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    .dynamic-table th {
+      background-color: #f2f2f2;
+    }
+
+    table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+  </style>
+  <link rel="stylesheet" href="styles/style.css">
+  <!-- boxicon css link -->
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <!-- Link Swiper's CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+</head>
+
+<body>
+  <div class="overlay"></div>
+  <header>
+    <a href="#" class="logo"><img src="img/head.png" alt="">
+      <ul class="navlist">
+        <li><a href="#userlog" style="font-size:30px; margin-left:30px;">User Log</a></li>
+        <li><a href="#serverlog" style="font-size:30px;margin-left:60px;">Server Log</a></li>
+        <li><a href="#heatmaps" style="font-size:30px;margin-left:90px;">Heat Map</a></li>
+      </ul>
+      <div class="right-header">
+        <a href="#" class="logo"><img src="img/right head.png" alt="">
+          <div class="menu-icon">
+            <div class="bar"></div>
+          </div>
+      </div>
+  </header>
+  <br>
+  <br>
+  <br>
+  <br>
+    <div class="hero-info">
+      <h1 id="userlog" style="margin-left:650px;">User Log</h1>
+    </div>   
+    <section id="userLog">
+      <h2>User Activity Log</h2>
+      <table id="userActivityTable">
+        <thead>
+          <tr>
+            <th>Action</th>
+            <th>Element</th>
+            <th>Timestamp</th>
+            <th>Time Difference from Previous</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Data rows will go here -->
+        </tbody>
+      </table>
+    </section>
+    <script>
+        function fetchAndUpdateTable() {
+            fetch('/index.js')
+            .then(response => response.json())
+            .then(data => {
+            const tableBody = document.getElementById('userActivityTable').getElementsByTagName('tbody')[0];
+            tableBody.innerHTML = ''; // Clear existing rows
+    
+            // Add new rows from fetched data
+            data.forEach(row => {
+                let newRow = tableBody.insertRow();
+                Object.keys(row).forEach(key => {
+                    let cell = newRow.insertCell();
+                    let text = document.createTextNode(row[key]);
+                    cell.appendChild(text);
+                });
+            });
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    
+        // Update the table every 10 seconds (or your preferred interval)
+    setInterval(fetchAndUpdateTable, 10000); 
+  </script>
+    
+  
+    <div class="hero-info">
+      <h1 id="serverlog" style="margin-left:650px;">Server Log</h1>
+    </div>  
+    <br> 
+    <br>
+    <br>
+    <table>
+      <thead>
+          <tr>
+              <th>IP Address</th>
+              <th>Date</th>
+              <th>Request</th>
+              <th>Status Code</th>
+              <th>User Agent</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr>
+              <td>172.26.3.214</td>
+              <td>09/Jan/2024 00:01:03 +0530</td>
+              <td>GET /scan_m/cas_userstats/getUserStats.php?sdate=2024-01-09&amp;edate=2024-01-09 HTTP/1.1</td>
+              <td>200</td>
+              <td>python-requests/2.5.1 CPython/3.8.5 Linux/3.10.0-327.el7.x86_64</td>
+          </tr>
+          <tr>
+            <td>172.26.3.214</td>
+            <td>09/Jan/2024 00:02:01 +0530</td>
+            <td>GET /scan_m/cas_userstats/getUserStats.php?sdate=2024-01-09&amp;edate=2024-01-09 HTTP/1.1</td>
+            <td>200</td>
+            <td>python-requests/2.5.1 CPython/3.8.5 Linux/3.10.0-327.el7.x86_64</td>
+        </tr>
+        <tr>
+            <td>172.26.3.200</td>
+            <td>09/Jan/2024 00:02:18 +0530</td>
+            <td>GET /anganwadi/ HTTP/1.1</td>
+            <td>200</td>
+            <td>Python-urllib/3.7</td>
+        </tr>
+        <tr>
+            <td>172.26.3.214</td>
+            <td>09/Jan/2024 00:03:01 +0530</td>
+            <td>GET /scan_m/cas_userstats/getUserStats.php?sdate=2024-01-09&amp;edate=2024-01-09 HTTP/1.1</td>
+            <td>200</td>
+            <td>python-requests/2.5.1 CPython/3.8.5 Linux/3.10.0-327.el7.x86_64</td>
+        </tr>
+        <tr>
+            <td>172.26.3.214</td>
+            <td>09/Jan/2024 00:04:01 +0530</td>
+            <td>GET /scan_m/cas_userstats/getUserStats.php?sdate=2024-01-09&amp;edate=2024-01-09 HTTP/1.1</td>
+            <td>200</td>
+            <td>python-requests/2.5.1 CPython/3.8.5 Linux/3.10.0-327.el7.x86_64</td>
+        </tr>
+        <tr>
+            <td>172.26.3.214</td>
+            <td>09/Jan/2024 00:05:02 +0530</td>
+            <td>GET /scan_m/cas_userstats/getUserStats.php?sdate=2024-01-09&amp;edate=2024-01-09 HTTP/1.1</td>
+            <td>200</td>
+            <td>python-requests/2.5.1 CPython/3.8.5 Linux/3.10.0-327.el7.x86_64</td>
+        </tr>
+        <tr>
+            <td>172.26.3.214</td>
+            <td>09/Jan/2024 00:06:01 +0530</td>
+            <td>GET /scan_m/cas_userstats/getUserStats.php?sdate=2024-01-09&amp;edate=2024-01-09 HTTP/1.1</td>
+            <td>200</td>
+            <td>python-requests/2.5.1 CPython/3.8.5 Linux/3.10.0-327.el7.x86_64</td>
+        </tr>
+        <tr>
+            <td>172.26.3.214</td>
+            <td>09/Jan/2024 00:07:02 +0530</td>
+            <td>GET /scan_m/cas_userstats/getUserStats.php?sdate=2024-01-09&amp;edate=2024-01-09 HTTP/1.1</td>
+            <td>200</td>
+            <td>python-requests/2.5.1 CPython/3.8.5 Linux/3.10.0-327.el7.x86_64</td>
+        </tr>
+        <tr>
+            <td>172.26.3.214</td>
+            <td>09/Jan/2024 00:08:02 +0530</td>
+            <td>GET /scan_m/cas_userstats/getUserStats.php?sdate=2024-01-09&amp;edate=2024-01-09 HTTP/1.1</td>
+            <td>200</td>
+            <td>python-requests/2.5.1 CPython/3.8.5 Linux/3.10.0-327.el7.x86_64</td>
+        </tr>
+        <tr>
+            <td>172.26.3.214</td>
+            <td>09/Jan/2024 00:09:01 +0530</td>
+            <td>GET /scan_m/cas_userstats/getUserStats.php?sdate=2024-01-09&amp;edate=2024-01-09 HTTP/1.1</td>
+            <td>200</td>
+            <td>python-requests/2.5.1 CPython/3.8.5 Linux/3.10.0-327.el7.x86_64</td>
+        </tr>
+
+        <tr>
+          <td>172.26.3.214</td>
+          <td>09/Jan/2024 00:13:01 +0530</td>
+          <td>GET /scan_m/cas_userstats/getUserStats.php?sdate=2024-01-09&amp;edate=2024-01-09 HTTP/1.1</td>
+          <td>200</td>
+          <td>python-requests/2.5.1 CPython/3.8.5 Linux/3.10.0-327.el7.x86_64</td>
+      </tr>
+      <tr>
+          <td>172.26.3.214</td>
+          <td>09/Jan/2024 00:14:01 +0530</td>
+          <td>GET /scan_m/cas_userstats/getUserStats.php?sdate=2024-01-09&amp;edate=2024-01-09 HTTP/1.1</td>
+          <td>200</td>
+          <td>python-requests/2.5.1 CPython/3.8.5 Linux/3.10.0-327.el7.x86_64</td>
+      </tr>
+      <tr>
+          <td>172.26.3.214</td>
+          <td>09/Jan/2024 00:15:01 +0530</td>
+          <td>GET /scan_m/cas_userstats/getUserStats.php?sdate=2024-01-09&amp;edate=2024-01-09 HTTP/1.1</td>
+          <td>200</td>
+          <td>python-requests/2.5.1 CPython/3.8.5 Linux/3.10.0-327.el7.x86_64</td>
+      </tr>
+      <tr>
+          <td>172.26.3.214</td>
+          <td>09/Jan/2024 00:16:02 +0530</td>
+          <td>GET /scan_m/cas_userstats/getUserStats.php?sdate=2024-01-09&amp;edate=2024-01-09 HTTP/1.1</td>
+          <td>200</td>
+          <td>python-requests/2.5.1 CPython/3.8.5 Linux/3.10.0-327.el7.x86_64</td>
+      </tr>
+      <tr>
+          <td>172.26.3.214</td>
+          <td>09/Jan/2024 00:17:01 +0530</td>
+          <td>GET /scan_m/cas_userstats/getUserStats.php?sdate=2024-01-09&amp;edate=2024-01-09 HTTP/1.1</td>
+          <td>200</td>
+          <td>python-requests/2.5.1 CPython/3.8.5 Linux/3.10.0-327.el7.x86_64</td>
+      </tr>
+      <tr>
+          <td>172.26.3.214</td>
+          <td>09/Jan/2024 00:18:01 +0530</td>
+          <td>GET /scan_m/cas_userstats/getUserStats.php?sdate=2024-01-09&amp;edate=2024-01-09 HTTP/1.1</td>
+          <td>200</td>
+          <td>python-requests/2.5.1 CPython/3.8.5 Linux/3.10.0-327.el7.x86_64</td>
+      </tr>
+      <tr>
+          <td>172.26.3.214</td>
+          <td>09/Jan/2024 00:19:01 +0530</td>
+          <td>GET /scan_m/cas_userstats/getUserStats.php?sdate=2024-01-09&amp;edate=2024-01-09 HTTP/1.1</td>
+          <td>200</td>
+          <td>python-requests/2.5.1 CPython/3.8.5 Linux/3.10.0-327.el7.x86_64</td>
+      </tr>
+      <tr>
+          <td>172.26.3.214</td>
+          <td>09/Jan/2024 00:20:01 +0530</td>
+          <td>GET /scan_m/cas_userstats/getUserStats.php?sdate=2024-01-09&amp;edate=2024-01-09 HTTP/1.1</td>
+          <td>200</td>
+          <td>python-requests/2.5.1 CPython/3.8.5 Linux/3.10.0-327.el7.x86_64</td>
+      </tr>
+      <tr>
+          <td>172.26.3.214</td>
+          <td>09/Jan/2024 00:21:01 +0530</td>
+          <td>GET /scan_m/cas_userstats/getUserStats.php?sdate=2024-01-09&amp;edate=2024-01-09 HTTP/1.1</td>
+          <td>200</td>
+          <td>python-requests/2.5.1 CPython/3.8.5 Linux/3.10.0-327.el7.x86_64</td>
+      </tr>
+      <tr>
+          <td>172.26.3.214</td>
+          <td>09/Jan/2024 00:22:01 +0530</td>
+          <td>GET /scan_m/cas_userstats/getUserStats.php?sdate=2024-01-09&amp;edate=2024-01-09 HTTP/1.1</td>
+          <td>200</td>
+          <td>python-requests/2.5.1 CPython/3.8.5 Linux/3.10.0-327.el7.x86_64</td>
+      </tr>
+      <tr>
+          <td>172.26.3.214</td>
+          <td>09/Jan/2024 00:23:01 +0530</td>
+          <td>GET /scan_m/cas_userstats/getUserStats.php?sdate=2024-01-09&amp;edate=2024-01-09 HTTP/1.1</td>
+          <td>200</td>
+          <td>python-requests/2.5.1 CPython/3.8.5 Linux/3.10.0-327.el7.x86_64</td>
+      </tr>
+      <tr>
+          <td>172.26.3.214</td>
+          <td>09/Jan/2024 00:24:02 +0530</td>
+          <td>GET /scan_m/cas_userstats/getUserStats.php?sdate=2024-01-09&amp;edate=2024-01-09 HTTP/1.1</td>
+          <td>200</td>
+          <td>python-requests/2.5.1 CPython/3.8.5 Linux/3.10.0-327.el7.x86_64</td>
+      </tr>
+
+      <tr>
+        <td>172.26.3.214</td>
+        <td>09/Jan/2024 00:26:01 +0530</td>
+        <td>GET /scan_m/cas_userstats/getUserStats.php?sdate=2024-01-09&amp;edate=2024-01-09 HTTP/1.1</td>
+        <td>200</td>
+        <td>python-requests/2.5.1 CPython/3.8.5 Linux/3.10.0-327.el7.x86_64</td>
+    </tr>
+    <tr>
+        <td>172.26.3.214</td>
+        <td>09/Jan/2024 00:27:01 +0530</td>
+        <td>GET /scan_m/cas_userstats/getUserStats.php?sdate=2024-01-09&amp;edate=2024-01-09 HTTP/1.1</td>
+        <td>200</td>
+        <td>python-requests/2.5.1 CPython/3.8.5 Linux/3.10.0-327.el7.x86_64</td>
+    </tr>
+    <tr>
+        <td>172.26.3.214</td>
+        <td>09/Jan/2024 00:28:01 +0530</td>
+        <td>GET /scan_m/cas_userstats/getUserStats.php?sdate=2024-01-09&amp;edate=2024-01-09 HTTP/1.1</td>
+        <td>200</td>
+        <td>python-requests/2.5.1 CPython/3.8.5 Linux/3.10.0-327.el7.x86_64</td>
+    </tr>
+    <tr>
+        <td>172.26.3.214</td>
+        <td>09/Jan/2024 00:29:01 +0530</td>
+        <td>GET /scan_m/cas_userstats/getUserStats.php?sdate=2024-01-09&amp;edate=2024-01-09 HTTP/1.1</td>
+        <td>200</td>
+        <td>python-requests/2.5.1 CPython/3.8.5 Linux/3.10.0-327.el7.x86_64</td>
+    </tr>
+    <tr>
+        <td>172.26.3.214</td>
+        <td>09/Jan/2024 00:30:02 +0530</td>
+        <td>GET /scan_m/cas_userstats/getUserStats.php?sdate=2024-01-09&amp;edate=2024-01-09 HTTP/1.1</td>
+        <td>200</td>
+        <td>python-requests/2.5.1 CPython/3.8.5 Linux/3.10.0-327.el7.x86_64</td>
+    </tr>
+    <tr>
+        <td>172.26.3.214</td>
+        <td>09/Jan/2024 00:31:01 +0530</td>
+        <td>GET /scan_m/cas_userstats/getUserStats.php?sdate=2024-01-09&amp;edate=2024-01-09 HTTP/1.1</td>
+        <td>200</td>
+        <td>python-requests/2.5.1 CPython/3.8.5 Linux/3.10.0-327.el7.x86_64</td>
+    </tr>
+    <tr>
+        <td>172.26.3.214</td>
+        <td>09/Jan/2024 00:32:02 +0530</td>
+        <td>GET /scan_m/cas_userstats/getUserStats.php?sdate=2024-01-09&amp;edate=2024-01-09 HTTP/1.1</td>
+        <td>200</td>
+        <td>python-requests/2.5.1 CPython/3.8.5 Linux/3.10.0-327.el7.x86_64</td>
+    </tr>
+    <tr>
+        <td>172.26.3.214</td>
+        <td>09/Jan/2024 00:33:01 +0530</td>
+        <td>GET /scan_m/cas_userstats/getUserStats.php?sdate=2024-01-09&amp;edate=2024-01-09 HTTP/1.1</td>
+        <td>200</td>
+        <td>python-requests/2.5.1 CPython/3.8.5 Linux/3.10.0-327.el7.x86_64</td>
+    </tr>
+    <tr>
+        <td>172.26.3.214</td>
+        <td>09/Jan/2024 00:34:01 +0530</td>
+        <td>GET /scan_m/cas_userstats/getUserStats.php?sdate=2024-01-09&amp;edate=2024-01-09 HTTP/1.1</td>
+        <td>200</td>
+        <td>python-requests/2.5.1 CPython/3.8.5 Linux/3.10.0-327.el7.x86_64</td>
+    </tr>
+    <tr>
+        <td>172.26.3.200</td>
+        <td>09/Jan/2024 00:34:08 +0530</td>
+        <td>GET /anganwadi/ HTTP/1.1</td>
+        <td>200</td>
+        <td>Python-urllib/3.7</td>
+    </tr>
+    <tr>
+        <td>172.26.3.214</td>
+        <td>09/Jan/2024 00:35:01 +0530</td>
+        <td>GET /scan_m/cas_userstats/getUserStats.php?sdate=2024-01-09&amp;edate=2024-01-09 HTTP/1.1</td>
+        <td>200</td>
+        <td>python-requests/2.5.1 CPython/3.8.5 Linux/3.10.0-327.el7.x86_64</td>
+    </tr>
+    <tr>
+        <td>172.26.3.214</td>
+        <td>09/Jan/2024 00:36:01 +0530</td>
+        <td>GET /scan_m/cas_userstats/getUserStats.php?sdate=2024-01-09&amp;edate=2024-01-09 HTTP/1.1</td>
+        <td>200</td>
+        <td>python-requests/2.5.1 CPython/3.8.5 Linux/3.10.0-327.el7.x86_64</td>
+    </tr>
+    <tr>
+        <td>172.26.3.214</td>
+        <td>09/Jan/2024 00:37:01 +0530</td>
+        <td>GET /scan_m/cas_userstats/getUserStats.php?sdate=2024-01-09&amp;edate=2024-01-09 HTTP/1.1</td>
+        <td>200</td>
+        <td>python-requests/2.5.1 CPython/3.8.5 Linux/3.10.0-327.el7.x86_64</td>
+    </tr>
+    <tr>
+        <td>172.26.3.214</td>
+        <td>09/Jan/2024 00:38:01 +0530</td>
+        <td>GET /scan_m/cas_userstats/getUserStats.php?sdate=2024-01-09&amp;edate=2024-01-09 HTTP/1.1</td>
+        <td>200</td>
+        <td>python-requests/2.5.1 CPython/3.8.5 Linux/3.10.0-327.el7.x86_64</td>
+    </tr>
+
+    <tr>
+      <td>172.26.3.214</td>
+      <td>09/Jan/2024 00:40:01 +0530</td>
+      <td>GET /scan_m/cas_userstats/getUserStats.php?sdate=2024-01-09&amp;edate=2024-01-09 HTTP/1.1</td>
+      <td>200</td>
+      <td>python-requests/2.5.1 CPython/3.8.5 Linux/3.10.0-327.el7.x86_64</td>
+  </tr>
+  <tr>
+      <td>172.26.3.214</td>
+      <td>09/Jan/2024 00:41:02 +0530</td>
+      <td>GET /scan_m/cas_userstats/getUserStats.php?sdate=2024-01-09&amp;edate=2024-01-09 HTTP/1.1</td>
+      <td>200</td>
+      <td>python-requests/2.5.1 CPython/3.8.5 Linux/3.10.0-327.el7.x86_64</td>
+  </tr>
+  <tr>
+      <td>172.26.3.214</td>
+      <td>09/Jan/2024 00:42:01 +0530</td>
+      <td>GET /scan_m/cas_userstats/getUserStats.php?sdate=2024-01-09&amp;edate=2024-01-09 HTTP/1.1</td>
+      <td>200</td>
+      <td>python-requests/2.5.1 CPython/3.8.5 Linux/3.10.0-327.el7.x86_64</td>
+  </tr>
+  <tr>
+      <td>172.26.3.214</td>
+      <td>09/Jan/2024 00:43:01 +0530</td>
+      <td>GET /scan_m/cas_userstats/getUserStats.php?sdate=2024-01-09&amp;edate=2024-01-09 HTTP/1.1</td>
+      <td>200</td>
+      <td>python-requests/2.5.1 CPython/3.8.5 Linux/3.10.0-327.el7.x86_64</td>
+  </tr>
+  <tr>
+      <td>172.26.3.214</td>
+      <td>09/Jan/2024 00:44:01 +0530</td>
+      <td>GET /scan_m/cas_userstats/getUserStats.php?sdate=2024-01-09&amp;edate=2024-01-09 HTTP/1.1</td>
+      <td>200</td>
+      <td>python-requests/2.5.1 CPython/3.8.5 Linux/3.10.0-327.el7.x86_64</td>
+  </tr>
+  <tr>
+      <td>172.26.3.214</td>
+      <td>09/Jan/2024 00:45:01 +0530</td>
+      <td>GET /scan_m/cas_userstats/getUserStats.php?sdate=2024-01-09&amp;edate=2024-01-09 HTTP/1.1</td>
+      <td>200</td>
+      <td>python-requests/2.5.1 CPython/3.8.5 Linux/3.10.0-327.el7.x86_64</td>
+  </tr>
+  <tr>
+      <td>172.26.3.214</td>
+      <td>09/Jan/2024 00:46:01 +0530</td>
+      <td>GET /scan_m/cas_userstats/getUserStats.php?sdate=2024-01-09&amp;edate=2024-01-09 HTTP/1.1</td>
+      <td>200</td>
+      <td>python-requests/2.5.1 CPython/3.8.5 Linux/3.10.0-327.el7.x86_64</td>
+  </tr>
+  <tr>
+      <td>172.26.3.214</td>
+      <td>09/Jan/2024 00:47:01 +0530</td>
+      <td>GET /scan_m/cas_userstats/getUserStats.php?sdate=2024-01-09&amp;edate=2024-01-09 HTTP/1.1</td>
+      <td>200</td>
+      <td>python-requests/2.5.1 CPython/3.8.5 Linux/3.10.0-327.el7.x86_64</td>
+  </tr>
+  <tr>
+      <td>172.26.3.214</td>
+      <td>09/Jan/2024 00:48:01 +0530</td>
+      <td>GET /scan_m/cas_userstats/getUserStats.php?sdate=2024-01-09&amp;edate=2024-01-09 HTTP/1.1</td>
+      <td>200</td>
+      <td>python-requests/2.5.1 CPython/3.8.5 Linux/3.10.0-327.el7.x86_64</td>
+  </tr>
+  <tr>
+      <td>172.26.3.214</td>
+      <td>09/Jan/2024 00:49:01 +0530</td>
+      <td>GET /scan_m/cas_userstats/getUserStats.php?sdate=2024-01-09&amp;edate=2024-01-09 HTTP/1.1</td>
+      <td>200</td>
+      <td>python-requests/2.5.1 CPython/3.8.5 Linux/3.10.0-327.el7.x86_64</td>
+  </tr>
+  <tr>
+      <td>172.26.3.214</td>
+      <td>09/Jan/2024 00:50:01 +0530</td>
+      <td>GET /scan_m/cas_userstats/getUserStats.php?sdate=2024-01-09&amp;edate=2024-01-09 HTTP/1.1</td>
+      <td>200</td>
+      <td>python-requests/2.5.1 CPython/3.8.5 Linux/3.10.0-327.el7.x86_64</td>
+  </tr>
+  <tr>
+      <td>172.26.3.214</td>
+      <td>09/Jan/2024 00:51:01 +0530</td>
+      <td>GET /scan_m/cas_userstats/getUserStats.php?sdate=2024-01-09&amp;edate=2024-01-09 HTTP/1.1</td>
+      <td>200</td>
+      <td>python-requests/2.5.1 CPython/3.8.5 Linux/3.10.0-327.el7.x86_64</td>
+  </tr>
+  <tr>
+      <td>172.26.3.214</td>
+      <td>09/Jan/2024 00:52:01 +0530</td>
+      <td>GET /scan_m/cas_userstats/getUserStats.php?sdate=2024-01-09&amp;edate=2024-01-09 HTTP/1.1</td>
+      <td>200</td>
+      <td>python-requests/2.5.1 CPython/3.8.5 Linux/3.10.0-327.el7.x86_64</td>
+  </tr>
+  <tr>
+      <td>172.26.3.214</td>
+      <td>09/Jan/2024 00:53:01 +0530</td>
+      <td>GET /scan_m/cas_userstats/getUserStats.php?sdate=2024-01-09&amp;edate=2024-01-09 HTTP/1.1</td>
+      <td>200</td>
+      <td>python-requests/2.5.1 CPython/3.8.5 Linux/3.10.0-327.el7.x86_64</td>
+  </tr>
+  <tr>
+      <td>172.26.3.214</td>
+      <td>09/Jan/2024 00:54:01 +0530</td>
+      <td>GET /scan_m/cas_userstats/getUserStats.php?sdate=2024-01-09&amp;edate=2024-01-09 HTTP/1.1</td>
+      <td>200</td>
+      <td>python-requests/2.5.1 CPython/3.8.5 Linux/3.10.0-327.el7.x86_64</td>
+  </tr>
+  <tr>
+      <td>172.26.3.214</td>
+      <td>09/Jan/2024 00:55:01 +0530</td>
+      <td>GET /scan_m/cas_userstats/getUserStats.php?sdate=2024-01-09&amp;edate=2024-01-09 HTTP/1.1</td>
+      <td>200</td>
+      <td>python-requests/2.5.1 CPython/3.8.5 Linux/3.10.0-327.el7.x86_64</td>
+  </tr>
+  <tr>
+      <td>172.26.3.214</td>
+      <td>09/Jan/2024 00:56:01 +0530</td>
+      <td>GET /scan_m/cas_userstats/getUserStats.php?sdate=2024-01-09&amp;edate=2024-01-09 HTTP/1.1</td>
+      <td>200</td>
+      <td>python-requests/2.5.1 CPython/3.8.5 Linux/3.10.0-327.el7.x86_64</td>
+  </tr>
+  <tr>
+      <td>172.26.3.214</td>
+      <td>09/Jan/2024 00:57:01 +0530</td>
+      <td>GET /scan_m/cas_userstats/getUserStats.php?sdate=2024-01-09&amp;edate=2024-01-09 HTTP/1.1</td>
+      <td>200</td>
+      <td>python-requests/2.5.1 CPython/3.8.5 Linux/3.10.0-327.el7.x86_64</td>
+  </tr>
+  <tr>
+      <td>172.26.3.214</td>
+      <td>09/Jan/2024 00:58:01 +0530</td>
+      <td>GET /scan_m/cas_userstats/getUserStats.php?sdate=2024-01-09&amp;edate=2024-01-09 HTTP/1.1</td>
+      <td>200</td>
+      <td>python-requests/2.5.1 CPython/3.8.5 Linux/3.10.0-327.el7.x86_64</td>
+  </tr>
+      </tbody>
+  </table>
+  <div class="chart-container" style="position: relative; height:40vh; width:80vw">
+    <canvas id="activityBarChart"></canvas>
+  </div>
+
+  <section>
+    <div class="chart-container">
+        <canvas id="userActivityChart" class="chart"></canvas>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Sample data - Replace this with your dynamic data source
+            const userActivityData = {
+                labels: ["2024-01-01", "2024-01-02", "2024-01-03", "2024-01-04", "2024-01-05"], // Dates
+                datasets: [{
+                    label: 'Daily User Activities',
+                    data: [120, 150, 180, 200, 170], // Number of users per day
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            };
+
+            // Chart options
+            const userActivityOptions = {
+                scales: {
+                    x: {
+                        type: 'category',
+                        title: {
+                            display: true,
+                            text: 'Date'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Number of User Activities'
+                        }
+                    }
+                },
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: (context) => {
+                                const label = context.dataset.label || '';
+                                const value = context.parsed.y;
+                                return ${label}: ${value} activities;
+                            }
+                        }
+                    }
+                }
+            };
+
+            // Initialize chart
+            const ctx = document.getElementById('userActivityChart').getContext('2d');
+            const userActivityChart = new Chart(ctx, {
+                type: 'bar',
+                data: userActivityData,
+                options: userActivityOptions
+            });
+        });
+    </script>
+</section>
+
+  <div class="hero-info">
+    <h1 id="heatmaps" style="margin-left:650px;">Heat Map</h1>
+  </div>  
+  <br>
+  <br>
+  <img style="margin-left:450px;"src="https://cdn.ttgtmedia.com/rms/onlineimages/example_of_a_color_coded_heat_map-f_mobile.png" alt="heatmap" width="650" height="400">
+  <br>
+  <br>
+
+<br>
+<br>
+  <footer>
+    <p>Copyright © Bhuvan:ISRO/NRSC, 2023</p>
+    <p><span>Aadil Arsh S R, Sanjay Kumaar Eswaran, Kavin Dev R, AswinKumar V</span> </p>
+    <p>All Right Reserved.</p>
+  </footer>
+
+  <div id="progress">
+    <span id="progress-value">
+      <i class='bx bxs-chevrons-up'></i>
+    </span>
+  </div>
+
+  <!-- scroll reveal  -->
+  <script src="https://unpkg.com/scrollreveal"></script>
+  <!-- Swiper JS -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+  <!-- mixitup cdn js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mixitup/3.3.1/mixitup.min.js"></script>
+  <script src="../script.js"></script>
+  
+  
+</body>
+
+</html>

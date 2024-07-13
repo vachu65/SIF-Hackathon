@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV Data Display</title>
+    <style>
+        /* Add some styling to display each div element on a new line */
+        #csvDataDisplay div {
+            display: block;
+            margin-bottom: 5px; /* Add some spacing between each line */
+        }
+    </style>
+</head>
+<body>
+
+<!-- Display area for the CSV data -->
+<div id="csvDataDisplay"></div>
+
+<script>
+    // Function to fetch and display the CSV file
+    function fetchAndDisplayCSV() {
+        fetch('recommendedActions.csv')  // Adjust the file path as needed
+            .then(response => response.text())
+            .then(csvData => {
+                // Split the CSV data into an array
+                var dataArray = csvData.split(',');
+
+                // Create variables to store each element
+                var element1 = dataArray[0].trim().replace(/'/g, '');
+                var element2 = dataArray[1].trim().replace(/'/g, '');
+                var element3 = dataArray[2].trim().replace(/'/g, '');
+                var element4 = dataArray[3].trim().replace(/'/g, '');
+                var element5 = dataArray[4].trim().replace(/'/g, '');
+
+                // You can now use these variables as needed
+                console.log('Element 1:', element1);
+                console.log('Element 2:', element2);
+                console.log('Element 3:', element3);
+                console.log('Element 4:', element4);
+                console.log('Element 5:', element5);
+
+                // Create a div element to display the data
+                var displayDiv = document.getElementById('csvDataDisplay');
+
+                // Access each element individually by index
+                for (var i = 0; i < dataArray.length; i++) {
+                    // Remove leading and trailing spaces and single quotes
+                    var cleanItem = dataArray[i].trim().replace(/'/g, '');
+
+                    // Create a div element
+                    var divElement = document.createElement('div');
+                    divElement.textContent = cleanItem;
+
+                    // Append the div element to the display div
+                    displayDiv.appendChild(divElement);
+                }
+            })
+            .catch(error => console.error('Error fetching or processing CSV file:', error));
+    }
+
+    // Call the function to fetch and display the CSV data
+    fetchAndDisplayCSV();
+</script>
+
+</body>
+</html>
